@@ -115,10 +115,10 @@ rm /opt/hello.txt
 echo "some random text of your choice" > /opt/hello.txt
 ```
 
-2. Mount the file as a bind mount inside the ubuntu:18.04 container at /src
+2. Create a container with name bindmount using ubuntu:20.04 image. Mount the above file (not the directory) as a bind mount inside this container at /src location.
 
 ```bash
-docker run --name ubuntu2 -d -v /opt:/src -it ubuntu:18.04
+docker run --name bindmount -v /opt/hello.txt:/src/hello.txt ubuntu:20.04
 ```
 
 3. Create a new volume called data with docker volume command
@@ -127,13 +127,16 @@ docker run --name ubuntu2 -d -v /opt:/src -it ubuntu:18.04
 docker volume create data
 ```
 
-4. Run an another ubuntu:18.04 container, then mount the data volume into the container at /src, and create a file /src/hello.txt in container with some random text
+4. Run an another ubuntu:20.04 container with name volumemount. Mount the data volume we just created into the container at /src location. Create a file /src/hello.txt in this container with some random text
 
 ```bash
-docker run --name ubuntu -d -v data:/src -it ubuntu:18.04
+docker run --name ubuntu -d -v data:/src -it ubuntu:20.04
 docker exec -ti ubuntu bash
 echo "some random text" > /src/hello.txt
 ```
+OR
+`docker run --name volumemount -v data:/src ubuntu:20.04 "/bin/bash" "-c" "echo test>>/src/hello.txt"
+`
 
 5. What happens to the hello.txt file when we remove both the containers? Provide an explanation
 
