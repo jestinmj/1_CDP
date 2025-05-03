@@ -159,12 +159,12 @@ curl localhost:5000/v2/_catalog
 ### Challenge: Store the docker image in registry
 
 1. Sign up for the Free Docker Hub Account here
-2. Login using the above account details and use the docker login command on the DevSecOps-Box machine to login into the Docker Hub registry
+2. Use the docker login command on the DevSecOps-Box machine to login into the Docker Hub registry via Command Line Interface (CLI). When prompted for credentials, please use the credentials you just created in the above task 1
 
 ```bash
 docker logout
-docker login -u frankz
-75CcxATfadmsmuf
+docker login -u jestinj88
+Login Succeeded
 ```
 
 3. Push/Upload django.nv:1.0 image you created in the above exercise to Docker Hub
@@ -177,9 +177,8 @@ docker push frankz/django.nv:1.0
 4. Stop the registry container and remove the images to save the disk space
 
 ```bash
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
-docker rmi -f $(docker images |  awk '{ print $3}' | tail -n +2)
+docker stop registry
+docker rmi django.nv:1.0
 ```
 
 ### Docker Networking
