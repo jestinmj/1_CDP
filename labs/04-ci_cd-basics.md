@@ -249,6 +249,7 @@ integration:
     - echo "this is an output" > output.txt
   artifacts:
     paths: [output.txt]
+    when: always
 
 deploy:
   stage: deploy
@@ -257,7 +258,7 @@ deploy:
   when: manual
 ```
 
-3. Fail the integration job using exit code
+3. Include an artifact with when: always for every executed integration job, and trigger a failure in the integration job using exit 1
 
 ```yml
 stages:
@@ -283,7 +284,7 @@ integration:
     - exit 1
   artifacts:
     paths: [output.txt]
-  allow_failure: true
+    when: always
 
 deploy:
   stage: deploy
@@ -317,6 +318,7 @@ integration:
     - exit 1
   artifacts:
     paths: [output.txt]
+    when: always
   allow_failure: true
 
 deploy:
